@@ -91,7 +91,7 @@ export const weapons = [
     { id: "The Brimstone", name: "The Brimstone", costOwner: 25, costOther: 25, ownerCharId: "Solider 11" },
     { id: "The Restrained", name: "The Restrained", costOwner: 35, costOther: 25, ownerCharId: "Lycaon" },
     { id: "Timeweaver", name: "Timeweaver", costOwner: 35, costOther: 25, ownerCharId: "Yanagi" },
-    { id: "Tusks of Fury", name: "Tusks of Fury", costOwner: 25, costOther: 25, ownerCharId: "Caesae" },
+    { id: "Tusks of Fury", name: "Tusks of Fury", costOwner: 25, costOther: 25, ownerCharId: "Caesar" },
     { id: "Weeping Cradle", name: "Weeping Cradle", costOwner: 25, costOther: 20, ownerCharId: "Rina" },
     { id: "Zanshin Herb Case", name: "Zanshin Herb Case", costOwner: 25, costOther: 25, ownerCharId: "Harumasa" },
 ];

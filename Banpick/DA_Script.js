@@ -15,26 +15,27 @@ const GAME_PHASES = {
 };
 
 const PHASE_MESSAGES = {
-    [GAME_PHASES.BLUE_PROPOSE_1]: 'Team Blue : Propose 3 characters',
-    [GAME_PHASES.RED_CHOOSE_1_FOR_BLUE_1]: 'Red Team : Choose 1 character for Blue.',
-    [GAME_PHASES.RED_PROPOSE_1]: 'Team Red: Propose 3 characters',
-    [GAME_PHASES.BLUE_CHOOSE_1_FOR_RED_1]: 'Blue Team : Choose 1 character for Red.',
-    [GAME_PHASES.RED_PROPOSE_2]: 'Team Red: Propose 3 characters',
-    [GAME_PHASES.BLUE_CHOOSE_1_FOR_RED_2]: 'Blue Team : Choose 1 character for Red.',
-    [GAME_PHASES.BLUE_PROPOSE_2]: 'Team Blue: Offer 3 characters',
-    [GAME_PHASES.RED_CHOOSE_1_FOR_BLUE_2]: 'Red Team : Choose 1 character for Blue.',
+    [GAME_PHASES.BLUE_PROPOSE_1]: 'Team Blue : Propose 3 agents',
+    [GAME_PHASES.RED_CHOOSE_1_FOR_BLUE_1]: 'Red Team : Choose 1 agent for Blue.',
+    [GAME_PHASES.RED_PROPOSE_1]: 'Team Red: Propose 3 agents',
+    [GAME_PHASES.BLUE_CHOOSE_1_FOR_RED_1]: 'Blue Team : Choose 1 agent for Red.',
+    [GAME_PHASES.RED_PROPOSE_2]: 'Team Red: Propose 3 agents',
+    [GAME_PHASES.BLUE_CHOOSE_1_FOR_RED_2]: 'Blue Team : Choose 1 agent for Red.',
+    [GAME_PHASES.BLUE_PROPOSE_2]: 'Team Blue: Propose 3 agents',
+    [GAME_PHASES.RED_CHOOSE_1_FOR_BLUE_2]: 'Red Team : Choose 1 agent for Blue.',
     [GAME_PHASES.RED_FREE_PICK]: 'Red team : Last free pick',
     [GAME_PHASES.BLUE_FREE_PICK]: 'Blue team : Last free pick',
     [GAME_PHASES.GAME_OVER]: 'Draft completed! Please insert M and W-engine',
 };
 
 const TURN_MESSAGES = {
-    bluePropose: 'Blue กำลังเสนอ (เลือก 3)',
-    redChooseForBlue: 'Red กำลังเลือกให้ Blue (คลิกวงกลม)',
-    redPropose: 'Red กำลังเสนอ (เลือก 3)',
-    blueChooseForRed: 'Blue กำลังเลือกให้ Red (คลิกวงกลม)',
-    redFreePick: 'Red กำลังเลือก',
-    blueFreePick: 'Blue กำลังเลือก',
+    bluePropose: 'Blue is proposing (Pick 3)',
+    redChooseForBlue: 'Red is choosing for Blue (Click the circle)',
+    redPropose: 'Red is proposing (Pick 3)',
+    blueChooseForRed: 'Blue is choosing for Red (Click the circle)',
+    redFreePick: 'Red is picking',
+    blueFreePick: 'Blue is picking',
+    gameOver: 'Adjust Cost & Finalize',
 };
 
 const MAX_COST = 350;
@@ -54,13 +55,11 @@ const currentTurnDisplay = document.getElementById('currentTurnDisplay');
 const resetButton = document.getElementById('resetButton');
 const undoButton = document.getElementById('undoButton');
 const finalButton = document.getElementById('finalButton');
-const backButton = document.getElementById('backButton');
 const messageBox = document.getElementById('messageBox');
 const messageTextContainer = document.getElementById('messageTextContainer');
-const messageBoxClose = document.getElementById('messageBoxClose');
+const messageButtonContainer = document.getElementById('messageButtonContainer');
 const teamBlueSection = document.querySelector('.team-section.bg-blue-900');
 const teamRedSection = document.querySelector('.team-section.bg-red-900');
-const messageButtonContainer = document.getElementById('messageButtonContainer');
 
 const pickElements = {
     blue: [
@@ -84,7 +83,7 @@ function initGame() {
     history = [];
     
     [...pickElements.blue, ...pickElements.red].forEach(el => {
-        el.innerHTML = '<span class="text-xs">ตัวละคร</span>';
+        el.innerHTML = '<span class="text-xs">Agent</span>';
         el.className = 'character-box placeholder';
     });
     
@@ -194,7 +193,7 @@ function calculateTeamCost(teamPicks) {
         let cost = pick.char.baseCost;
         cost += pick.char.mChoices[pick.mLevel];
         if (pick.weapon) {
-            cost += pick.weapon.ownerCharId === pick.char.id ? pick.weapon.costOwner : pick.weapon.costOther;
+            cost += pick.weapon.ownerCharId.toLowerCase() === pick.char.id.toLowerCase() ? pick.weapon.costOwner : pick.weapon.costOther;
         }
         return total + cost;
     }, 0);
@@ -334,7 +333,7 @@ function renderPhaseInfo() {
     gamePhaseDisplay.textContent = PHASE_MESSAGES[currentPhase] || '';
     let currentTurnKey = Object.keys(TURN_MESSAGES).find(key => {
         const simplePhase = currentPhase.toLowerCase().replace(/_1|_2/g, '');
-        const simpleKey = key.toLowerCase().replace('for', 'choose');
+        const simpleKey = key.toLowerCase().replace('forblue', '').replace('forred', '');
         return simplePhase.includes(simpleKey);
     });
     currentTurnDisplay.textContent = TURN_MESSAGES[currentTurnKey || 'gameOver'];
@@ -364,20 +363,16 @@ function undoLastAction() {
 
 function showMessage(htmlContent) {
     messageTextContainer.innerHTML = htmlContent;
-    
     const okButtonHTML = `<button id="popupOkBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">ok</button>`;
     messageButtonContainer.innerHTML = okButtonHTML;
-
     document.getElementById('popupOkBtn').addEventListener('click', () => {
         messageBox.classList.add('hidden');
     });
-
     messageBox.classList.remove('hidden');
 }
 
 function showConfirmation(message, onConfirm) {
     messageTextContainer.innerHTML = `<p class="text-xl font-semibold text-white">${message}</p>`;
-    
     const buttonsHTML = `
         <div class="flex justify-center gap-4">
             <button id="confirmBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Confirm</button>
@@ -385,16 +380,13 @@ function showConfirmation(message, onConfirm) {
         </div>
     `;
     messageButtonContainer.innerHTML = buttonsHTML;
-    
     document.getElementById('confirmBtn').addEventListener('click', () => {
         onConfirm();
         messageBox.classList.add('hidden');
     });
-
     document.getElementById('cancelBtn').addEventListener('click', () => {
         messageBox.classList.add('hidden');
     });
-
     messageBox.classList.remove('hidden');
 }
 
@@ -408,8 +400,7 @@ function calculatePenalty(rawScore, totalCost) {
     let totalPercentPenalty = costOver * percentPenaltyPerPoint;
     const cappedPercentPenalty = Math.min(totalPercentPenalty, 0.60);
     const percentagePenaltyPoints = rawScore * cappedPercentPenalty;
-    const totalPenaltyPoints = basePenalty + percentagePenaltyPoints;
-    const finalScore = rawScore - totalPenaltyPoints;
+    const finalScore = rawScore - (basePenalty + percentagePenaltyPoints);
     return {
         basePenalty: basePenalty,
         percentagePenaltyPoints: Math.round(percentagePenaltyPoints),
@@ -419,11 +410,16 @@ function calculatePenalty(rawScore, totalCost) {
 }
 
 document.addEventListener('DOMContentLoaded', initGame);
+
 resetButton.addEventListener('click', () => {
     showConfirmation('Are you sure you want to reset?', initGame);
 });
 undoButton.addEventListener('click', undoLastAction);
-backButton.addEventListener('click', () => window.history.back());
+
+document.querySelector('a[href="./index.html"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = this.href;
+});
 
 finalButton.addEventListener('click', () => {
     if (currentPhase !== GAME_PHASES.GAME_OVER) {
