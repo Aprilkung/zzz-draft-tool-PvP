@@ -1,138 +1,128 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ZZZ PvP</title>
-    <link rel="stylesheet" href="SD_style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PvP DA ZZZ Draft Pick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="DA_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="font-inter bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="container max-w-6xl w-full p-6 relative">
+        <button id="backButton" class="absolute top-4 left-4 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+            ← กลับไปโหมดเก่า
+        </button>
 
-     <a href="http://127.0.0.1:5500/Banpick/DA_index.html" class="mode-link-box">
-    <h3>Try PvP DA mode!</h3>
-</a>
+        <h1 class="text-4xl font-bold text-center mb-8 text-yellow-400">PvP DA ZZZ</h1>
 
-    <h1>ZZZ Shiyu PvP</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            
+            <div class="team-section bg-blue-900 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="flex justify-between items-center w-full mb-4">
+                    <h2 contenteditable="true" class="text-2xl font-semibold text-blue-300 flex items-center outline-none focus:ring-2 focus:ring-yellow-400 rounded-md px-2">
+                        <span class="w-4 h-4 bg-blue-400 rounded-full mr-2"></span> ทีม Blue
+                    </h2>
+                    <div id="blueCostDisplay" class="cost-display text-lg font-bold">0/350</div>
+                </div>
+                <div class="score-input-container mt-4 w-full">
+                    <label for="blueScoreInput" class="block text-center text-lg font-semibold mb-2 text-yellow-300">คะแนนดิบ</label>
+                    <input type="number" id="blueScoreInput" placeholder="กรอกคะแนน..." class="w-full text-center">
+                </div>
+            
+                <div class="bg-gray-700 p-4 rounded-lg w-full mt-6 mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-red-300">Red เลือก 1 ให้ Blue (รอบ 1)</h3>
+                    <div id="redChoose1BlueSlot1" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
+                </div>
+            
+                <div class="bg-gray-700 p-4 rounded-lg w-full mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-red-300">Red เลือก 1 ให้ Blue (รอบ 4)</h3>
+                    <div id="redChoose1BlueSlot2" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
+                </div>
+            
+                <div class="bg-gray-700 p-4 rounded-lg w-full">
+                    <h3 class="text-lg font-medium mb-2 text-blue-300">Blue เลือกเอง</h3>
+                    <div id="blueFreePickSlot" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
+                </div>
+            </div>
 
-    <div id="main-game-phase" class="game-phase">
-        <div class="teams-container">
-            <div class="team" id="blue-team">
-                <h3 id="blue-title" contenteditable="true">
-                    🔵 Blue Team
-                    <span class="team-cost-display" id="blue-cost">Cost: 0</span>
-                </h3>
-
-                <div class="ban-pick-row ban-row">
-                    <div class="char-slot ban-char-slot" id="blue-ban-1" data-type="ban" data-index="0" data-team="blue"></div>
+            <div class="central-area flex flex-col items-center justify-between h-full">
+                <div class="text-center mb-4">
+                    <p id="gamePhaseDisplay" class="text-xl font-bold text-green-400 mb-2">เริ่มต้นเกม</p>
+                    <p id="currentTurnDisplay" class="text-lg text-gray-300">รอการเลือกตัวละคร...</p>
                 </div>
 
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="blue-pick-1" data-type="pick" data-index="0" data-team="blue"></div>
-                    <div class="char-slot" id="blue-pick-2" data-type="pick" data-index="1" data-team="blue"></div>
+                <div id="proposalContainer" class="w-full flex justify-center gap-4 mb-4">
+                    <div id="proposalSlots" class="flex justify-around gap-2 p-2 rounded-lg">
+                        <div class="character-slot relative w-16 h-16 bg-gray-600 rounded-full flex flex-col items-center justify-center border-2 border-dashed border-gray-500"></div>
+                        <div class="character-slot relative w-16 h-16 bg-gray-600 rounded-full flex flex-col items-center justify-center border-2 border-dashed border-gray-500"></div>
+                        <div class="character-slot relative w-16 h-16 bg-gray-600 rounded-full flex flex-col items-center justify-center border-2 border-dashed border-gray-500"></div>
+                    </div>
                 </div>
 
-                <div class="ban-pick-row ban-row">
-                    <div class="char-slot ban-char-slot" id="blue-ban-2" data-type="ban" data-index="1" data-team="blue"></div>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner w-full mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-center text-purple-300">ตัวละครที่พร้อมใช้งาน</h3>
+                    <div id="availableCharactersContainer" class="grid grid-cols-3 gap-3 overflow-y-auto h-96 p-2 custom-scrollbar">
+                    </div>
                 </div>
 
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="blue-pick-3" data-type="pick" data-index="2" data-team="blue"></div>
-                    <div class="char-slot" id="blue-pick-4" data-type="pick" data-index="3" data-team="blue"></div>
-                </div>
-
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="blue-pick-5" data-type="pick" data-index="4" data-team="blue"></div>
-                    <div class="char-slot" id="blue-pick-6" data-type="pick" data-index="5" data-team="blue"></div>
+                <div class="flex space-x-4 mt-auto">
+                    <button id="undoButton" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">ย้อนกลับ</button>
+                    <button id="resetButton" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">รีเซ็ต</button>
+                    <button id="finalButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">สรุปผล</button>
                 </div>
             </div>
 
-            <div id="char-grid" class="characters"></div>
-
-            <div class="team" id="red-team">
-                <h3 id="red-title" contenteditable="true">
-                    🔴 Red Team
-                    <span class="team-cost-display" id="red-cost">Cost: 0</span>
-                </h3>
-
-                <div class="ban-pick-row ban-row">
-                    <div class="char-slot ban-char-slot" id="red-ban-1" data-type="ban" data-index="0" data-team="red"></div>
+            <div class="team-section bg-red-900 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="flex justify-between items-center w-full mb-4">
+                     <h2 contenteditable="true" class="text-2xl font-semibold text-red-300 flex items-center outline-none focus:ring-2 focus:ring-yellow-400 rounded-md px-2">
+                        <span class="w-4 h-4 bg-red-400 rounded-full mr-2"></span> ทีม Red
+                    </h2>
+                    <div id="redCostDisplay" class="cost-display text-lg font-bold">0/350</div>
+                </div>
+                <div class="score-input-container mt-4 w-full">
+                    <label for="redScoreInput" class="block text-center text-lg font-semibold mb-2 text-yellow-300">คะแนนดิบ</label>
+                    <input type="number" id="redScoreInput" placeholder="กรอกคะแนน..." class="w-full text-center">
                 </div>
 
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="red-pick-1" data-type="pick" data-index="0" data-team="red"></div>
-                    <div class="char-slot" id="red-pick-2" data-type="pick" data-index="1" data-team="red"></div>
+                <div class="bg-gray-700 p-4 rounded-lg w-full mt-6 mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-blue-300">Blue เลือก 1 ให้ Red (รอบ 2)</h3>
+                    <div id="blueChoose1RedSlot1" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
                 </div>
 
-                <div class="ban-pick-row ban-row">
-                    <div class="char-slot ban-char-slot" id="red-ban-2" data-type="ban" data-index="1" data-team="red"></div>
+                <div class="bg-gray-700 p-4 rounded-lg w-full mb-6">
+                    <h3 class="text-lg font-medium mb-2 text-blue-300">Blue เลือก 1 ให้ Red (รอบ 3)</h3>
+                    <div id="blueChoose1RedSlot2" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
                 </div>
 
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="red-pick-3" data-type="pick" data-index="2" data-team="red"></div>
-                    <div class="char-slot" id="red-pick-4" data-type="pick" data-index="3" data-team="red"></div>
+                <div class="bg-gray-700 p-4 rounded-lg w-full">
+                    <h3 class="text-lg font-medium mb-2 text-red-300">Red เลือกเอง</h3>
+                    <div id="redFreePickSlot" class="character-box">
+                        <span class="text-xs">ตัวละคร</span>
+                    </div>
                 </div>
-
-                <div class="ban-pick-row pick-row">
-                    <div class="char-slot" id="red-pick-5" data-type="pick" data-index="4" data-team="red"></div>
-                    <div class="char-slot" id="red-pick-6" data-type="pick" data-index="5" data-team="red"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="turn-info" class="turn-info"></div>
-
-        <div class="controls">
-            <button id="undo-btn">undo</button>
-            <button id="reset-btn">reset</button>
-            <button id="go-to-result-btn">finalize</button>
-        </div>
-    </div>
-
-    <div id="result-phase" class="game-phase hidden">
-        <h2>กรอกผลการแข่งขัน</h2>
-        <div class="time-input-section">
-            <div class="time-input-group">
-                <label for="blue-time-seconds">เวลา Blue (วินาที):</label>
-                <input type="number" id="blue-time-seconds" value="0" min="0">
-            </div>
-            <div class="time-input-group">
-                <label for="red-time-seconds">เวลา Red (วินาที):</label>
-                <input type="number" id="red-time-seconds" value="0" min="0">
-            </div>
-        </div>
-        <button id="calculate-result-btn">Result</button>
-
-        <div id="result-display" class="result-display hidden">
-            <h3>ผลการแข่งขัน</h3>
-            <p id="winner-text"></p>
-            <p id="blue-penalty-text"></p>
-            <p id="red-penalty-text"></p>
-            <p id="final-blue-time-text"></p>
-            <p id="final-red-time-text"></p>
-        </div>
-        <div class="controls" style="margin-top: 20px;">
-            <button id="back-to-main-btn">back to Draft page</button>
-            <button id="reset-game-from-result-btn">reset</button>
-        </div>
-    </div>
-
-    <div id="message-box-overlay" class="message-box-overlay">
-        <div class="message-box-content">
-            <p id="message-box-text"></p>
-            <div class="message-box-buttons">
-                <button id="message-box-ok-btn">OK</button>
-                <button id="message-box-cancel-btn" class="hidden">cancle</button>
             </div>
         </div>
     </div>
 
-        <div id="rules-section" class="info-box">
-            <h3>Recommended Rules</h3>
-            <p>1. This website is designed for 1 vs 1 gameplay. </p>
-            <p>2. Duplicate character picks are allowed, as the current character pool in the game is still limited. </p>
-            <p>3. Once the total cost exceeds 600, an additional 10 seconds will be immediately added to the timer. After that, for every 1 cost point beyond 600, the timer will increase by an additional 0.5%.</p>
+    <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
+            <div id="messageTextContainer"></div>
+            <div id="messageButtonContainer" class="mt-6"></div>
         </div>
+    </div>
 
-    <script src="SD_script.js"  type="module"></script>
+    <script type="module" src="Data.js"></script>
+    <script type="module" src="DA_script.js"></script>
 </body>
 </html>
