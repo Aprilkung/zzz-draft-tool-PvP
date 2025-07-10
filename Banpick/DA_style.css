@@ -4,6 +4,60 @@ body {
     color: black;
 }
 
+.boss-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.boss-dropdown-item:hover {
+    background-color: #4b5563;
+}
+.boss-dropdown-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+.boss-dropdown-item .boss-name {
+    flex-grow: 1;
+    color: #e5e7eb;
+}
+.boss-dropdown-item input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+#gacha-slot {
+    position: relative;
+    width: 8rem;
+    height: 8rem; 
+}
+#gacha-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.gacha-spinning img {
+    animation: gacha-spin 0.1s linear infinite;
+}
+
+@keyframes gacha-spin {
+    0% { transform: translateY(-20px); opacity: 0; }
+    50% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(20px); opacity: 0; }
+}
+
+#spin-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
 }

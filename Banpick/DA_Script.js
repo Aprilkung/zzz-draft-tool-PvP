@@ -462,3 +462,80 @@ finalButton.addEventListener('click', () => {
         showMessage(resultHTML);
     }
 });
+import { bosses } from './Data.js';
+
+const bossSelectBtn = document.getElementById('boss-select-btn');
+const bossDropdown = document.getElementById('boss-dropdown');
+const gachaSlot = document.getElementById('gacha-slot');
+const spinButton = document.getElementById('spin-button');
+
+function populateBossDropdown() {
+    bosses.forEach(boss => {
+        const item = document.createElement('div');
+        item.className = 'boss-dropdown-item';
+        item.innerHTML = `
+            <img src="${boss.img}" alt="${boss.name}" onerror="this.onerror=null;this.src='https://placehold.co/40x40/6b7280/ffffff?text=X';">
+            <span class="boss-name">${boss.name}</span>
+            <input type="checkbox" data-boss-id="${boss.id}" checked>
+        `;
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        bossDropdown.appendChild(item);
+    });
+}
+
+function handleSpin() {
+    const selectedBosses = [];
+    const checkboxes = bossDropdown.querySelectorAll('input[type="checkbox"]:checked');
+    
+    checkboxes.forEach(checkbox => {
+        const bossId = checkbox.dataset.bossId;
+        const boss = bosses.find(b => b.id === bossId);
+        if (boss) {
+            selectedBosses.push(boss);
+        }
+    });
+
+    if (selectedBosses.length < 2) {
+        showMessage('<p class="text-xl font-semibold mb-6 text-white">กรุณาเลือกบอสอย่างน้อย 2 ตัวเพื่อสุ่ม</p>');
+        return;
+    }
+
+    spinButton.disabled = true;
+    gachaSlot.innerHTML = ''; 
+
+    let spinDuration = 3000;
+    let spinInterval = 100;
+
+    const spinAnimation = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * selectedBosses.length);
+        const randomBoss = selectedBosses[randomIndex];
+        gachaSlot.innerHTML = `<img src="${randomBoss.img}" alt="Spinning...">`;
+    }, spinInterval);
+
+    setTimeout(() => {
+        clearInterval(spinAnimation);
+        
+        const finalRandomIndex = Math.floor(Math.random() * selectedBosses.length);
+        const finalBoss = selectedBosses[finalRandomIndex];
+        gachaSlot.innerHTML = `<img src="${finalBoss.img}" alt="${finalBoss.name}">`;
+
+        spinButton.disabled = false;
+    }, spinDuration);
+}
+
+bossSelectBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    bossDropdown.classList.toggle('hidden');
+});
+
+spinButton.addEventListener('click', handleSpin);
+
+document.addEventListener('click', () => {
+    if (!bossDropdown.classList.contains('hidden')) {
+        bossDropdown.classList.add('hidden');
+    }
+});
+
+populateBossDropdown();

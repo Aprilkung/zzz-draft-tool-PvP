@@ -96,6 +96,19 @@ export const weapons = [
     { id: "Zanshin Herb Case", name: "Zanshin Herb Case", costOwner: 25, costOther: 25, ownerCharId: "Harumasa" },
 ];
 
+export const bosses = [
+    { id: "Bringer", name: "Bringer", img: "Boss/Bringer.png" },
+    { id: "Corrupted_Overlord_Pompey", name: "Corrupted Overlord Pompey", img: "Boss/Corrupted_Overlord_Pompey.png" },
+    { id: "Dead_End_Butcher", name: "Dead End Butcher", img: "Boss/Dead_End_Butcher.png" },
+    { id: "Miasma_Priest", name: "Miasma Priest", img: "Boss/Miasma_Priest.png" },
+    { id: "Notorious_Dead_End_Butcher", name: "Notorious Dead End Butcher", img: "Boss/Notorious_Dead_End_Butcher.png" },
+    { id: "Notorious_Marionette", name: "Notorious Marionette", img: "Boss/Notorious_Marionette.png" },
+    { id: "Notorious_Pompey", name: "Notorious Pompey", img: "Boss/Notorious_Pompey.png" },
+    { id: "TyphonDestroyer", name: "TyphonDestroyer", img: "Boss/TyphonDestroyer.png" },
+    { id: "Unknown_Corruption_Complex", name: "Unknown Corruption Complex", img: "Boss/Unknown_Corruption_Complex.png" },
+    
+];
+
 export const GAME_PHASES = {
     MAIN: 'main',
     RESULT: 'result'

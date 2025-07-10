@@ -9,10 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="font-inter bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="container max-w-6xl w-full p-6 relative bg-gray-800 rounded-lg shadow-xl">
+    <div class>
         <a href="./index.html" class="absolute top-4 left-4 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
             Try PvP Shiyu
         </a>
+
+        <div id="boss-gacha-section" class="mt-12">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+
+                <div class="relative w-full md:w-1/3">
+                    <button id="boss-select-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md flex justify-between items-center transition duration-300 ease-in-out">
+                        <span>choose boss to gamba</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="boss-dropdown" class="absolute hidden mt-2 w-full bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto custom-scrollbar">
+                    </div>
+                </div>
+
+                <div id="gacha-ui" class="flex flex-col items-center gap-4">
+                    <div id="gacha-slot" class="w-32 h-32 bg-black bg-opacity-50 rounded-lg flex items-center justify-center overflow-hidden border-4 border-yellow-400 shadow-inner">
+                        <span class="text-gray-500 text-2xl">?</span>
+                    </div>
+                    <button id="spin-button" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out">
+                        SPIN
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <h1 class="text-4xl font-bold text-center mb-8 text-white">PvP DA ZZZ</h1>
 
@@ -121,7 +144,18 @@
             <div id="messageButtonContainer" class="mt-6"></div>
         </div>
     </div>
-    
+
+    <div id="rules-section" class="info-box">
+            <h3>Recommended Rules</h3>
+            <p>1. This mode is designed for competing in high-score challenges against a single boss in Deadly Assault. </p>
+            <p>2. If your team's total cost exceeds 350, you will receive an immediate 1,000 point deduction.
+                For every 1 cost point beyond 350, your final score will be reduced by 0.25%, up to a maximum of 60% score reduction.</p>
+            <p>3. Each team takes turns offering 3 characters to the opposing team. 
+                The opposing team selects 1 character from those 3 for the original team to use.
+                After this, each team is free to pick one final character of their choice.
+                Once a character has been picked by any team, it cannot be picked again.</p>
+        </div>
+
     <script type="module" src="Data.js"></script>
     <script type="module" src="DA_script.js"></script>
 </body>
