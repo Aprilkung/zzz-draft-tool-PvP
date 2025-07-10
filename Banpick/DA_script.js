@@ -1,4 +1,4 @@
-import { characters, weapons } from './Data.js';
+import { characters, weapons, bosses } from './Data.js';
 
 const GAME_PHASES = {
     BLUE_PROPOSE_1: 'BLUE_PROPOSE_1',
@@ -462,7 +462,6 @@ finalButton.addEventListener('click', () => {
         showMessage(resultHTML);
     }
 });
-import { bosses } from './Data.js';
 
 const bossSelectBtn = document.getElementById('boss-select-btn');
 const bossDropdown = document.getElementById('boss-dropdown');
