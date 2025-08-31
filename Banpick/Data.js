@@ -36,6 +36,8 @@ export const characters = [
     { id: "Yixuan", name: "Yixuan", img: "Character/Yixuan.png", baseCost: 150, mChoices: [0, 50, 75, 75, 75, 75, 250] },
     { id: "Ju Fufu", name: "Ju Fufu", img: "Character/Fufu.png", baseCost: 125, mChoices: [0, 25, 25, 25, 75, 75, 200] },
     { id: "Yuzuha", name: "Yuzuha", img: "Character/Yuzuha.png", baseCost: 150, mChoices: [0, 25, 50, 50, 75, 75, 200] },
+    { id: "Alice", name: "Alice", img: "Character/Alice.png", baseCost: 125, mChoices: [0, 25, 50, 50, 75, 75, 200] },
+    { id: "Seed", name: "Seed", img: "Character/Seed.png", baseCost: 150, mChoices: [0, 50, 75, 100, 150, 150, 200] }
 ];
 
 export const weapons = [
@@ -94,6 +96,8 @@ export const weapons = [
     { id: "Tusks of Fury", name: "Tusks of Fury", costOwner: 25, costOther: 25, ownerCharId: "Caesar" },
     { id: "Weeping Cradle", name: "Weeping Cradle", costOwner: 25, costOther: 20, ownerCharId: "Rina" },
     { id: "Zanshin Herb Case", name: "Zanshin Herb Case", costOwner: 25, costOther: 25, ownerCharId: "Harumasa" },
+    { id: "Practiced Perfection", name: "Practiced Perfection", costOwner: 25, costOther: 20, ownerCharId: "Alice" },
+     { id: "Cordis Germina", name: "Cordis Germina", costOwner: 50, costOther: 20, ownerCharId: "Seed" },
 ];
 
 export const bosses = [
